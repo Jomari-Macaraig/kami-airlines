@@ -30,3 +30,6 @@ class Airplane(Audit):
             self.get_airplane_fuel_consumption_per_minute()
             + self.get_additional_fuel_consumption_from_passenger_per_minute()
         )
+
+    def get_maximum_minutes_to_fly(self):
+        return self.get_fuel_tank_capacity() / self.get_total_fuel_consumption_per_minute()
