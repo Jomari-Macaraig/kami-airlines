@@ -1,3 +1,32 @@
+import math
+from decimal import Decimal
+
 from django.db import models
 
-# Create your models here.
+from airlines.core.models import Audit
+
+
+class Airplane(Audit):
+
+    MINIMUM_FUEL = 200
+    FUEL_CONSUMPTION = Decimal(0.8)
+    PASSENGER_FUEL_CONSUMPTION = Decimal(0.002)
+
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=64)
+    passenger = models.IntegerField()
+
+    def get_fuel_tank_capacity(self) -> int:
+        return self.MINIMUM_FUEL * self.id
+
+    def get_airplane_fuel_consumption_per_minute(self) -> Decimal:
+        return Decimal(math.log(self.id, 10)) * self.FUEL_CONSUMPTION
+
+    def get_additional_fuel_consumption_from_passenger_per_minute(self) -> Decimal:
+        return self.passenger * self.PASSENGER_FUEL_CONSUMPTION
+
+    def get_total_fuel_consumption_per_minute(self) -> Decimal:
+        return (
+            self.get_airplane_fuel_consumption_per_minute()
+            + self.get_additional_fuel_consumption_from_passenger_per_minute()
+        )
