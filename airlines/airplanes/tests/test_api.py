@@ -28,7 +28,7 @@ class AirplaneAPITests(TestCase):
 
     def create_airplane(self, id: int, passenger: int) -> Response:
         response = self.client.post(
-            reverse("apiv1:airplane"),
+            reverse("apiv1:airplanes"),
             {
                 "id": id,
                 "passenger": passenger
@@ -67,7 +67,7 @@ class AirplaneAPITests(TestCase):
             "total_fuel_consumption_per_minute",
             "maximum_minutes_to_fly",
         }
-        response = self.client.get(reverse("apiv1:airplane"))
+        response = self.client.get(reverse("apiv1:airplanes"))
         actual_fields = set(response.json()[0].keys())
         self.assertEqual(
             expected_fields,
