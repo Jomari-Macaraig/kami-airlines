@@ -11,7 +11,6 @@ class AirplaneModelTests(TestCase):
     def setUp(self) -> None:
         self.airplane, _ = Airplane.objects.get_or_create(
             id=2,
-            name="Test Airplane",
             passenger=80,
         )
 
